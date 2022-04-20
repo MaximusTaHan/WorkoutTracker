@@ -15,6 +15,7 @@ namespace WorkoutTracker.Controllers
             _unitOfWork = unitOfWork;
         }
 
+
         public IActionResult GetLongestWorkout([FromQuery]int count)
         {
             var longestWorkouts = _unitOfWork.Workouts.GetLongest(count);
@@ -42,18 +43,30 @@ namespace WorkoutTracker.Controllers
             var workoutList = _unitOfWork.Workouts.GetAll();
             return Ok(workoutList);
         }
-
-        public IActionResult GetById()
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            var workoutById = _unitOfWork.Workouts.GetById(1);
+            var workoutById = _unitOfWork.Workouts.GetById(id);
             return Ok(workoutById);
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteWorkout(int id)
+        {
+            var workoutDelete = _unitOfWork.Workouts.GetById(id);
+            _unitOfWork.Workouts.Remove(workoutDelete);
+            _unitOfWork.Complete();
+            return Ok();
+        }
         // Implement Update method in generic repository
-        //[HttpPut]
-        //public IActionResult UpdateWorkout()
-        //{
-        //    return Ok();
-        //}
+        [HttpPost("{id}")]
+        public IActionResult UpdateWorkout(int id)
+        {
+            var workoutUpdate = _unitOfWork.Workouts.GetById(id);
+            workoutUpdate.Comments = "updated";
+
+            _unitOfWork.Complete();
+            return Ok();
+        }
 
     }
 }

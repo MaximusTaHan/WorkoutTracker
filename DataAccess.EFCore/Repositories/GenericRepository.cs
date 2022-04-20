@@ -45,6 +45,12 @@ namespace DataAccess.EFCore.Repositories
             _context.Set<T>().Remove(entity);
         }
 
+        //public void Update(T entity)
+        //{
+        //    _context.Attach(entity);
+        //    _context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        //}
+
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
