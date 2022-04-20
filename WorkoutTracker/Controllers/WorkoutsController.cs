@@ -15,7 +15,7 @@ namespace WorkoutTracker.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
+        //Does not get longest, but orders by largest ID value (from guide i followed).
         public IActionResult GetLongestWorkout([FromQuery]int count)
         {
             var longestWorkouts = _unitOfWork.Workouts.GetLongest(count);
@@ -57,7 +57,7 @@ namespace WorkoutTracker.Controllers
             _unitOfWork.Complete();
             return Ok();
         }
-        // Implement Update method in generic repository
+
         [HttpPost("{id}")]
         public IActionResult UpdateWorkout(int id)
         {
